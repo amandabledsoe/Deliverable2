@@ -9,7 +9,7 @@ namespace Deliverable2
     class Guest
     {
         public string DrinkChoice;
-        public double DrinkTotal;
+        public double DrinkTotal = 2.00;
         public double BuffetTotal = 9.99;
         public double MealTotal;
 
@@ -19,16 +19,24 @@ namespace Deliverable2
         }
         public Guest(string drinkChoice)
         {
-            drinkChoice = DrinkChoice;
+            if (drinkChoice.ToLower() == "water")
+            {
+                DrinkTotal = 0.00;
+            }
+
+        }
+        public double CalculateDrinkTotal(Guest guest)
+        {
+            if (guest.DrinkChoice.ToLower() == "water")
+            {
+                guest.DrinkTotal = 0.00;
+            }
+            return guest.DrinkTotal;
         }
         public double CaluclateMealTotal(Guest guest)
         {
             double guestMealTotal;
-            if (guest.DrinkChoice.ToLower() == "coffee")
-            {
-                guest.DrinkTotal = 2.00;
-            }
-            else
+            if (guest.DrinkChoice.ToLower() == "water")
             {
                 guest.DrinkTotal = 0.00;
             }
@@ -36,6 +44,5 @@ namespace Deliverable2
             guest.MealTotal = guestMealTotal;
             return guestMealTotal;
         }
-
     }
 }

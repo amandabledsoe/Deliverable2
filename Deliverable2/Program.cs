@@ -12,38 +12,77 @@ namespace Deliverable2
             bool doingBuffetThings = true;
             int numberOfGuests;
             bool approvedPartySize;
-            List<Guest> guestList = new List<Guest>();
+            List<Guest> masterGuestList = new List<Guest>();
 
             Console.WriteLine("Hello!");
-            Console.WriteLine("Welcome to the Buffet I Still Need To Name Cleverly");
+            Console.WriteLine("Welcome to Those Guy's Buffet & Stuff");
+            Console.WriteLine("Home of the Big Ol' Buffet & Stuff");
 
             while (doingBuffetThings)
             {
+                Thread.Sleep(2000);
                 Console.WriteLine("");
                 Console.WriteLine("How many people do we have the pleasure of serving today?");
+                Console.Write("Enter Number of Guests: ");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 numberOfGuests = int.Parse(Console.ReadLine());
-                for (int i = 1; i <= numberOfGuests; i++)
-                {
-                    Guest guest = new Guest();
-                    guestList.Add(guest);
-                }
+                Console.ResetColor();
+
                 approvedPartySize = GettingNumOfGuests(numberOfGuests);
 
                 while (approvedPartySize == true)
                 {
                     Console.Clear();
-                    Console.WriteLine("Now that you're seated, \n let's get everyone started with something to drink!");
+                    Console.WriteLine("Now that you're seated,\nlet's get everyone started with something to drink!");
                     Console.WriteLine("");
-                    DrinkOrders(numberOfGuests);
+
+                    masterGuestList = DrinkOrders(numberOfGuests, masterGuestList);
+
+                    Console.WriteLine("Alright! The drink orders I have are as follows:");
+                    foreach (Guest guest in masterGuestList)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine($"For Guest #{masterGuestList.IndexOf(guest) + 1}, {guest.DrinkChoice}");
+                    }
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
+
+                    Console.WriteLine("");
+                    Console.WriteLine("I'll be right back with those drinks, folks!");
+                    Console.WriteLine("In the meantime, please help yourself to the buffet and enjoy your meal!");
+                    Thread.Sleep(5000);
+                    Console.Clear();
+
                     MealEnsues();
-                    //SettleBill(guestList);
+
+                    Console.WriteLine("How was your meal folks? Great I hope!");
+                    Console.WriteLine("");
+                    Thread.Sleep(2000);
+                    Console.WriteLine("Here is your check for today's meals:");
+                    Console.WriteLine("");
+                    Thread.Sleep(1000);
+                    Console.WriteLine(string.Format("{0,9}{1,13}{2,22}", "Guest Number", "Item", "Price"));
+                    Console.WriteLine("--------------------------------------------------");
+                    foreach (Guest guest in masterGuestList)
+                    {
+                        double thisDouble = guest.CalculateDrinkTotal(guest);
+                        Console.WriteLine(string.Format("{0,7}{1,19}{2,21}", $"{masterGuestList.IndexOf(guest)+1}", $"{guest.DrinkChoice}", $"${thisDouble}.00"));
+                        Console.WriteLine(string.Format("{0,7}{1,19}{2,21}", $"{masterGuestList.IndexOf(guest)+1}", "Buffet", $"${guest.BuffetTotal}"));
+                    }
+                    Console.WriteLine("");
+                    SettleBill(masterGuestList);
+                    Console.WriteLine("");
+                    Thread.Sleep(2000);
+                    Console.WriteLine("Whenever you're ready, meet us with your check at the register!\nTake your time.");
+                    Thread.Sleep(2000);
                     approvedPartySize = false;
                 }
                 doingBuffetThings = false;
             }
-
-            Console.WriteLine("Thank you for visiting our buffet!");
-            Console.WriteLine("Have a wonderful rest of your day!");
+            Console.WriteLine("");
+            Console.WriteLine("Thank you for visiting Those Guy's Buffet & Stuff!");
+            Console.WriteLine("Have a wonderful rest of your day - Come back and see us soon!");
+            Thread.Sleep(3000);
         }
         static bool GettingNumOfGuests(int numOfGuests)
         {
@@ -51,20 +90,19 @@ namespace Deliverable2
             {
                 Console.WriteLine("");
                 Console.WriteLine($"I'm sorry, we cannot accommodate a party size of {numOfGuests} at this time.");
-                Console.WriteLine("");
                 return false;
             }
             else if (numOfGuests <= 0)
             {
                 Console.WriteLine("");
                 Console.WriteLine("Your party size must be a minimum of 1 person to dine at our restaurant.");
-                Console.WriteLine("");
                 return false;
             }
             else
             {
+                Thread.Sleep(1500);
                 Console.WriteLine("");
-                Console.WriteLine($"Excellent! We'd be happy to accommodate your party of {numOfGuests}!");
+                Console.WriteLine($"Excellent!\nWe'd be happy to accommodate your party of {numOfGuests}!");
                 Console.WriteLine("");
                 Thread.Sleep(1500);
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -78,18 +116,20 @@ namespace Deliverable2
                 return true;
             }
         }
-        static void DrinkOrders(int numOfGuests)
+        static List<Guest> DrinkOrders(int numOfGuests, List<Guest> guestList)
         {
             bool doingDrinkOrders = true;
-            List<Guest> guestList = new List<Guest>();
 
             while (doingDrinkOrders)
             {
                 //need to find a way to put a try catch statement in here to catch words other than water or coffee
                 for (int i = 1; i <= numOfGuests; i++)
                 {
-                    Console.WriteLine($"Guest #{i}, what would you like to drink? We have water or coffee");
+                    Console.WriteLine($"Guest #{i}, what would you like to drink?\nWe have water or coffee.");
+                    Console.Write("Drink choice: ");
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
                     string choice = Console.ReadLine();
+                    Console.ResetColor();
                     if (choice == "water" || choice == "coffee")
                     {
                         Guest guest = new Guest();
@@ -106,26 +146,28 @@ namespace Deliverable2
                 }
                 doingDrinkOrders = false;
             }
-            Console.WriteLine("Alright! The drink orders I have are as follows:");
-            foreach (Guest guest in guestList)
-            {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"For Guest #{guestList.IndexOf(guest)+1}, {guest.DrinkChoice}");
-            }
-            Console.ResetColor();
-            Thread.Sleep(3000);
-            Console.WriteLine("");
-            Console.WriteLine("I'll be right back with those drinks, folks!");
-            Console.WriteLine("In the meantime, please help yourself to the buffet and enjoy your meal!");
-            Thread.Sleep(5000);
-            Console.Clear();
+            //Console.WriteLine("Alright! The drink orders I have are as follows:");
+            //foreach (Guest guest in guestList)
+            //{
+            //    Console.ForegroundColor = ConsoleColor.Blue;
+            //    Console.WriteLine($"For Guest #{guestList.IndexOf(guest)+1}, {guest.DrinkChoice}");
+            //}
+            //Console.ResetColor();
+            //Thread.Sleep(3000);
+            //Console.WriteLine("");
+            //Console.WriteLine("I'll be right back with those drinks, folks!");
+            //Console.WriteLine("In the meantime, please help yourself to the buffet and enjoy your meal!");
+            //Thread.Sleep(5000);
+            //Console.Clear();
+
+            return guestList;
         }
         static void MealEnsues()
         {
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("");
-            Console.WriteLine(" BEGIN MEAL SEQUENCE! :)");
+            Console.WriteLine("*BEGIN MEAL SEQUENCE!* :)");
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("");
@@ -133,15 +175,15 @@ namespace Deliverable2
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("");
-            Console.WriteLine("*YUM! This buffet sure looks tasty!*");
+            Console.WriteLine("*YUM! This Buffet Sure Looks TASTY!*");
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("");
-            Console.WriteLine("*Meals are brought back to the table & enjoyed*");
+            Console.WriteLine("*Meals are Brought Back to the Table & Enjoyed*");
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("");
-            Console.WriteLine("*Laughs are shared, fun is had*");
+            Console.WriteLine("*Laughs are Shared, Fun is Had*");
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("");
@@ -159,8 +201,10 @@ namespace Deliverable2
                 totals.Add(guest.CaluclateMealTotal(guest));
             }
             double billTotal = totals.Sum();
-            Console.WriteLine($"The total for your bill for all patrons is {billTotal}.");
-            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"The total of your bill for all patrons is ${billTotal}.");
+            Console.ResetColor();
+            Thread.Sleep(2500);
         }
     }
 }
