@@ -146,20 +146,6 @@ namespace Deliverable2
                 }
                 doingDrinkOrders = false;
             }
-            //Console.WriteLine("Alright! The drink orders I have are as follows:");
-            //foreach (Guest guest in guestList)
-            //{
-            //    Console.ForegroundColor = ConsoleColor.Blue;
-            //    Console.WriteLine($"For Guest #{guestList.IndexOf(guest)+1}, {guest.DrinkChoice}");
-            //}
-            //Console.ResetColor();
-            //Thread.Sleep(3000);
-            //Console.WriteLine("");
-            //Console.WriteLine("I'll be right back with those drinks, folks!");
-            //Console.WriteLine("In the meantime, please help yourself to the buffet and enjoy your meal!");
-            //Thread.Sleep(5000);
-            //Console.Clear();
-
             return guestList;
         }
         static void MealEnsues()
