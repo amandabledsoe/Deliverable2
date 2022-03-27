@@ -37,7 +37,8 @@ namespace Deliverable2
 
                     masterGuestList = DrinkOrders(numberOfGuests, masterGuestList);
 
-                    Console.WriteLine("Alright! The drink orders I have are as follows:");
+                    Thread.Sleep(1000);
+                    Console.WriteLine("Alright, thank you! The drink orders I have are as follows:");
                     foreach (Guest guest in masterGuestList)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -60,18 +61,20 @@ namespace Deliverable2
                     Console.WriteLine("Here is your check for today's meals:");
                     Console.WriteLine("");
                     Thread.Sleep(1000);
-                    Console.WriteLine(string.Format("{0,9}{1,13}{2,22}", "Guest Number", "Item", "Price"));
-                    Console.WriteLine("--------------------------------------------------");
+                    Console.WriteLine("------------------------------------------------");
+                    Console.WriteLine(string.Format("{0,0}{1,8}{2,12}{3,22}", "|", " Guest Number", "Item", "Price   |"));
+                    Console.WriteLine("------------------------------------------------");
                     foreach (Guest guest in masterGuestList)
                     {
                         double thisDouble = guest.CalculateDrinkTotal(guest);
-                        Console.WriteLine(string.Format("{0,7}{1,19}{2,21}", $"{masterGuestList.IndexOf(guest)+1}", $"{guest.DrinkChoice}", $"${thisDouble}.00"));
-                        Console.WriteLine(string.Format("{0,7}{1,19}{2,21}", $"{masterGuestList.IndexOf(guest)+1}", "Buffet", $"${guest.BuffetTotal}"));
+                        Console.WriteLine(string.Format("{0,0}{1,7}{2,19}{3,21}", "|", $"{masterGuestList.IndexOf(guest)+1}", $"{guest.DrinkChoice}", $"${thisDouble}.00   |"));
+                        Console.WriteLine(string.Format("{0,0}{1,7}{2,19}{3,21}", "|", $"{masterGuestList.IndexOf(guest)+1}", "buffet", $"${guest.BuffetTotal}   |"));
                     }
-                    Console.WriteLine("");
+                    Console.WriteLine("------------------------------------------------");
                     SettleBill(masterGuestList);
+                    Console.WriteLine("------------------------------------------------");
                     Console.WriteLine("");
-                    Thread.Sleep(2000);
+                    Thread.Sleep(5000);
                     Console.WriteLine("Whenever you're ready, meet us with your check at the register!\nTake your time.");
                     Thread.Sleep(2000);
                     approvedPartySize = false;
@@ -99,7 +102,7 @@ namespace Deliverable2
             }
             else
             {
-                Thread.Sleep(1500);
+                Thread.Sleep(1000);
                 Console.WriteLine("");
                 Console.WriteLine($"Excellent!\nWe'd be happy to accommodate your party of {numOfGuests}!");
                 Console.WriteLine("");
@@ -111,7 +114,7 @@ namespace Deliverable2
                 Console.ResetColor(); 
                 Console.WriteLine("Follow me this way to your table.");
                 Console.WriteLine("");
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
                 return true;
             }
         }
@@ -123,9 +126,10 @@ namespace Deliverable2
             {
                 for (int i = 1; i <= numOfGuests; i++)
                 {
+                    Thread.Sleep(1500);
                     Console.WriteLine($"Guest #{i}, what would you like to drink?\nWe have water or coffee.");
                     Console.Write("Drink choice: ");
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     string choice = Console.ReadLine();
                     Console.ResetColor();
                     try
@@ -135,9 +139,6 @@ namespace Deliverable2
                             Guest guest = new Guest();
                             guest.DrinkChoice = choice;
                             guestList.Add(guest);
-
-                            Console.WriteLine("");
-                            Console.WriteLine($"Excellent! {choice} for guest #{i}");
                             Console.WriteLine("");
                         }
                         else if (choice.ToLower() != "coffee" && choice.ToLower() != "water")
@@ -166,30 +167,30 @@ namespace Deliverable2
         }
         static void MealEnsues()
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("*BEGIN MEAL SEQUENCE!* :)");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("");
             Console.WriteLine("*Waitress Returns with Drinks*");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("");
             Console.WriteLine("*YUM! This Buffet Sure Looks TASTY!*");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("");
             Console.WriteLine("*Meals are Brought Back to the Table & Enjoyed*");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("");
             Console.WriteLine("*Laughs are Shared, Fun is Had*");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("");
             Console.WriteLine("*MEAL SEQUENCE COMPLETE! :)");
-            Thread.Sleep(3000);
+            Thread.Sleep(4000);
             Console.ResetColor();
             Console.Clear();
         }
@@ -202,10 +203,10 @@ namespace Deliverable2
                 totals.Add(guest.CaluclateMealTotal(guest));
             }
             double billTotal = totals.Sum();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"The total of your bill for all patrons is ${billTotal}.");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"|      The total of your bill is ${billTotal}.       |");
             Console.ResetColor();
-            Thread.Sleep(2500);
         }
     }
 }
