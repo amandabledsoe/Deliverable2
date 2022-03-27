@@ -19,10 +19,6 @@ namespace Deliverable2
         }
         public Guest(string drinkChoice)
         {
-            if (drinkChoice.ToLower() == "water")
-            {
-                DrinkTotal = 0.00;
-            }
 
         }
         public double CalculateDrinkTotal(Guest guest)
@@ -36,10 +32,6 @@ namespace Deliverable2
         public double CaluclateMealTotal(Guest guest)
         {
             double guestMealTotal;
-            if (guest.DrinkChoice.ToLower() == "water")
-            {
-                guest.DrinkTotal = 0.00;
-            }
             guestMealTotal = guest.DrinkTotal + guest.BuffetTotal;
             guest.MealTotal = guestMealTotal;
             return guestMealTotal;
