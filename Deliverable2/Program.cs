@@ -15,8 +15,7 @@ namespace Deliverable2
             List<Guest> masterGuestList = new List<Guest>();
 
             Console.WriteLine("Hello!");
-            Console.WriteLine("Welcome to Those Guy's Buffet & Stuff");
-            Console.WriteLine("Home of the Big Ol' Buffet & Stuff");
+            Console.WriteLine("Welcome to Those Guy's Buffet & Stuff - Home of the Big Ol' Buffet & Stuff!");
 
             while (doingBuffetThings)
             {
@@ -42,7 +41,7 @@ namespace Deliverable2
                     foreach (Guest guest in masterGuestList)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.WriteLine($"For Guest #{masterGuestList.IndexOf(guest) + 1}, {guest.DrinkChoice}");
+                        Console.WriteLine($"For Guest #{masterGuestList.IndexOf(guest) + 1}, {guest.DrinkChoice}.");
                     }
                     Console.ResetColor();
                     Thread.Sleep(3000);
@@ -55,7 +54,7 @@ namespace Deliverable2
 
                     MealEnsues();
 
-                    Console.WriteLine("How was your meal folks? Great I hope!");
+                    Console.WriteLine("How was your meal folks? Hope it was wonderful!");
                     Console.WriteLine("");
                     Thread.Sleep(2000);
                     Console.WriteLine("Here is your check for today's meals:");
@@ -122,7 +121,6 @@ namespace Deliverable2
 
             while (doingDrinkOrders)
             {
-                //need to find a way to put a try catch statement in here to catch words other than water or coffee
                 for (int i = 1; i <= numOfGuests; i++)
                 {
                     Console.WriteLine($"Guest #{i}, what would you like to drink?\nWe have water or coffee.");
@@ -130,18 +128,36 @@ namespace Deliverable2
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     string choice = Console.ReadLine();
                     Console.ResetColor();
-                    if (choice == "water" || choice == "coffee")
+                    try
                     {
-                        Guest guest = new Guest();
-                        guest.DrinkChoice = choice;
+                        if (choice.ToLower() == "water" || choice.ToLower() == "coffee")
+                        {
+                            Guest guest = new Guest();
+                            guest.DrinkChoice = choice;
+                            guestList.Add(guest);
 
-                        guestList.Add(guest);
-                        Console.WriteLine($"Excellent! {choice} for guest #{i}");
-                        Console.WriteLine();
+                            Console.WriteLine("");
+                            Console.WriteLine($"Excellent! {choice} for guest #{i}");
+                            Console.WriteLine("");
+                        }
+                        else if (choice.ToLower() != "coffee" && choice.ToLower() != "water")
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine($"I'm sorry, we don't offer the beverage {choice}.");
+                            Console.WriteLine("Since it's free, I'll just bring you a water instead!");
+                            Console.WriteLine("");
+
+                            Guest guest = new Guest();
+                            guest.DrinkChoice = "water";
+                            guestList.Add(guest);
+                        }
                     }
-                    else
+                    catch
                     {
-                        doingDrinkOrders = false;
+                        if (choice.ToLower() != "coffee" && choice.ToLower() != "water")
+                        {
+                            Console.WriteLine("Sorry, that choice isn't an option.");
+                        }
                     }
                 }
                 doingDrinkOrders = false;
@@ -152,7 +168,6 @@ namespace Deliverable2
         {
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("");
             Console.WriteLine("*BEGIN MEAL SEQUENCE!* :)");
             Thread.Sleep(3000);
             Console.ForegroundColor = ConsoleColor.Yellow;
